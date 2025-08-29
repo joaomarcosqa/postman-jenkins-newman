@@ -1,6 +1,16 @@
 pipeline {
     agent any
 
+    tools {
+        nodejs 'NodeJS_LTS'
+    }
+
+    environment {
+        COLLECTION = 'tests/collection.postman_collection.json'
+        REPORT_DIR = 'results'
+        REPORT_FILE = 'results/report.xml'
+    }
+
     stages {
         stage('Instalar Newman') {
             steps {
@@ -11,10 +21,10 @@ pipeline {
         stage('Executar Collection sem Variáveis') {
             steps {
                 sh '''
-                    mkdir -p results
-                    newman run tests/collection.postman_collection.json \
+                    mkdir -p ${REPORT_DIR}
+                    newman run ${COLLECTION} \
                         --reporters cli,junit \
-                        --reporter-junit-export=results/report.xml
+                        --reporter-junit-export=${REPORT_FILE}
                 '''
             }
         }
@@ -22,7 +32,7 @@ pipeline {
 
     post {
         always {
-            junit 'results/report.xml'
+            junit "${REPORT_FILE}"
         }
     }
 }
