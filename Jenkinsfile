@@ -9,7 +9,6 @@ pipeline {
         COLLECTION = 'tests/collection.postman_collection.json'
         REPORT_DIR = 'results'
         REPORT_FILE = 'results/report.xml'
-        EMAIL_RECIPIENT = 'joao.marcos@petzpartner.com.br'
     }
 
     stages {
@@ -36,7 +35,7 @@ pipeline {
             junit "${REPORT_FILE}"
 
             emailext(
-                to: "${EMAIL_RECIPIENT}",
+                to: 'joao.marcos@petzpartner.com.br',
                 subject: "[${currentBuild.currentResult}] ${env.JOB_NAME} - Build #${env.BUILD_NUMBER}",
                 body: """<p>Pipeline finalizada com status: <strong>${currentBuild.currentResult}</strong></p>
                          <p><b>Job:</b> ${env.JOB_NAME}</p>
