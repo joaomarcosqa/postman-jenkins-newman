@@ -20,35 +20,14 @@ pipeline {
 
         stage('Executar Collection sem Variáveis') {
             steps {
-                sh """
+                sh '''
                     mkdir -p ${REPORT_DIR}
                     newman run ${COLLECTION} \
                         --reporters cli,junit \
                         --reporter-junit-export=${REPORT_FILE}
-                """
+                '''
             }
         }
     }
 
-    post {
-        always {
-            junit "${REPORT_FILE}"
-
-            script {
-                def status = currentBuild.currentResult
-                def destinatarios = 'joao.marcos@petzpartner.com.br'
-
-                emailext(
-                    to: destinatarios,
-                    subject: "[${status}] ${env.JOB_NAME} - Build #${env.BUILD_NUMBER}",
-                    body: """<p>Pipeline finalizada com status: <strong>${status}</strong></p>
-                            <p><b>Job:</b> ${env.JOB_NAME}</p>
-                            <p><b>Build:</b> #${env.BUILD_NUMBER}</p>
-                            <p><b>Link:</b> <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>""",
-                    mimeType: 'text/html',
-                    attachLog: true
-                )
-            }
-        }
-    }
 }
