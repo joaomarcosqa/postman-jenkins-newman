@@ -35,13 +35,16 @@ pipeline {
             junit "${REPORT_FILE}"
 
             script {
+                def status = currentBuild.currentResult
                 emailext(
-                    subject: "[${currentBuild.currentResult}] ${env.JOB_NAME} - Build #${env.BUILD_NUMBER}",
-                    body: """<p>Pipeline finalizada com status: <strong>${currentBuild.currentResult}</strong></p>
+                    subject: "[${status}] ${env.JOB_NAME} - Build #${env.BUILD_NUMBER}",
+                    body: """<p>Pipeline finalizada com status: <strong>${status}</strong></p>
                              <p><b>Job:</b> ${env.JOB_NAME}</p>
                              <p><b>Build:</b> #${env.BUILD_NUMBER}</p>
                              <p><b>Link:</b> <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>""",
-                    to: 'yjoaomarcosadm@outlook.com',
+                    to: 'joao.marcos@petzpartner.com.br',
+                    from: 'testechapterqa@gmail.com',
+                    replyTo: 'testechapterqa@gmail.com',
                     attachLog: true
                 )
             }
