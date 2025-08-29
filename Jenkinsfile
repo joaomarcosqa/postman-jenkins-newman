@@ -30,19 +30,4 @@ pipeline {
         }
     }
 
-    post {
-        always {
-            junit "${REPORT_FILE}"
-
-            emailext(
-                to: 'joao.marcos@petzpartner.com.br',
-                subject: "[${currentBuild.currentResult}] ${env.JOB_NAME} - Build #${env.BUILD_NUMBER}",
-                body: """<p>Pipeline finalizada com status: <strong>${currentBuild.currentResult}</strong></p>
-                         <p><b>Job:</b> ${env.JOB_NAME}</p>
-                         <p><b>Build:</b> #${env.BUILD_NUMBER}</p>
-                         <p><b>Link:</b> <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>""",
-                attachLog: true
-            )
-        }
-    }
 }
