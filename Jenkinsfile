@@ -2,23 +2,17 @@ pipeline {
     agent any
 
     tools {
-        nodejs 'NodeJS_LTS'
+        nodejs 'NodeJS_LTS' // Nome definido na configuração de Tools no Jenkins
     }
 
     environment {
         COLLECTION = 'tests/collection.postman_collection.json'
         REPORT_DIR = 'results'
-        REPORT_FILE = 'results/report.xml'
+        REPORT_FILE = "${REPORT_DIR}/report.xml"
     }
 
     stages {
-        stage('Instalar Newman') {
-            steps {
-                sh 'npm install -g newman'
-            }
-        }
-
-        stage('Executar Collection sem Variáveis') {
+        stage('Executar Collection') {
             steps {
                 sh '''
                     mkdir -p ${REPORT_DIR}
