@@ -42,9 +42,9 @@ pipeline {
                              <p><b>Job:</b> ${env.JOB_NAME}</p>
                              <p><b>Build:</b> #${env.BUILD_NUMBER}</p>
                              <p><b>Link:</b> <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>""",
-                    to: 'joao.marcos@petzpartner.com.br',
-                    from: 'testechapterqa@gmail.com',
-                    replyTo: 'testechapterqa@gmail.com',
+                    to: "joao.marcos@petzpartner.com.br",
+                    from: "testechapterqa@gmail.com",
+                    replyTo: "testechapterqa@gmail.com",
                     attachLog: true
                 )
             }
